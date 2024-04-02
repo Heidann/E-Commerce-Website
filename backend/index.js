@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken"); // JSON Web Token for authentication
 const multer = require("multer"); //  Middleware for handling multipart/form-data
 const path = require("path");
 const cors = require("cors"); //  Cross Origin Resource Sharing (CORS) middleware for node.js
-const { error } = require("console");
+const { error, log } = require("console");
 
 app.use(express.json()); //  Parse incoming requests with JSON payloads and return responses with JSON payloads
 app.use(cors()); //
@@ -52,6 +52,87 @@ app.post("/upload", upload.single("product"), (req, res) => {
     // Địa chỉ URL của hình ảnh tải lên, bao gồm địa chỉ localhost và tên file
     image_url: `http://localhost:${port}/images/${req.file.filename}`,
   });
+});
+
+// Schema for creating products
+const Product = mongoose.model("Product", {
+  id: {
+    type: Number,
+    require: true,
+  },
+  name: {
+    type: String,
+    require: true,
+  },
+  image: {
+    type: String,
+    require: true,
+  },
+  category: {
+    type: String,
+    require: true,
+  },
+  new_price: {
+    type: Number,
+    require: true,
+  },
+  old_price: {
+    type: Number,
+    require: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  avilable: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+app.post("/addproduct", async (req, res) => {
+  let products = await Product.find({});
+  let id;
+  if (products.length > 0) {
+    let last_product_array = products.slice(-1);
+    let last_product = last_product_array[0];
+    id = last_product.id + 1;
+  } else {
+    id = 1;
+  }
+  const product = new Product({
+    id: id,
+    name: req.body.name,
+    image: req.body.image,
+    category: req.body.category,
+    new_price: req.body.new_price,
+    old_price: req.body.old_price,
+  });
+  console.log(product);
+  await product.save();
+  console.log("Saved");
+
+  res.json({
+    success: true,
+    name: req.body.name,
+  });
+});
+
+// Creating API for deleting
+app.post("/removeproduct", async (req, res) => {
+  await Product.findOneAndDelete({ id: req.body.id });
+  console.log("Removed");
+  res.json({
+    success: true,
+    name: req.body.name,
+  });
+});
+
+// Creating API for getting all product
+app.get("/allproducts", async (req, res) => {
+  let products = await Product.find({});
+  console.log("All Products Fetched");
+  res.send(products);
 });
 
 app.listen(port, (error) => {
