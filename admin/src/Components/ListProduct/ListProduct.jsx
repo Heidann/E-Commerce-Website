@@ -1,5 +1,60 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "./ListProduct.css";
+import cross_icon from "../../assets/cross_icon.png";
+
 export const ListProduct = () => {
-  return <div className="list-product"></div>;
+  const [allproducts, setAllproducts] = useState([]);
+
+  const fetchInfo = async () => {
+    await fetch("http://localhost:4000/allproducts")
+      .then((res) => res.json())
+      .then((data) => {
+        setAllproducts(data);
+      }, []);
+  };
+  useEffect(() => {
+    fetchInfo();
+  });
+  return (
+    <div className="list-product">
+      <h1>All Product list</h1>
+      <div className="listproduct-format-main">
+        <p>Product</p>
+        <p>Title</p>
+        <p>Old pprice</p>
+        <p>New price</p>
+        <p>Category</p>
+        <p>Remove</p>
+      </div>
+      <div className="listproduct-allproducts">
+        <hr />
+        {allproducts.map((product, index) => {
+          return (
+            <>
+              <div
+                key={index}
+                className="listproduct-format-main listproduct-format"
+              >
+                <img
+                  src={product.image}
+                  alt=""
+                  className="listproduct-product-icon"
+                />
+                <p>{product.name}</p>
+                <p>${product.old_price}</p>
+                <p>${product.new_price}</p>
+                <p>{product.category}</p>
+                <img
+                  className="listproduct-remove-icon"
+                  src={cross_icon}
+                  alt=""
+                />
+              </div>
+              <hr />
+            </>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
