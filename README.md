@@ -18,7 +18,7 @@ Các phần chính:
   ![kids](https://github.com/Heidann/E-Commerce-Website/assets/136775397/0597a2b8-9e39-429f-b70c-4da2d5f4c9d4)
 
 * Trang sản phẩm: Hiển thị thông tin chi tiết về một sản phẩm cụ thể và cho phép người dùng thêm sản phẩm vào giỏ hàng.
-
+![detail-product](https://github.com/Heidann/E-Commerce-Website/assets/136775397/fb5bf0fc-1187-43ee-b1d2-4feff52beafc)
   
 * Trang giỏ hàng: Hiển thị danh sách các sản phẩm đã được thêm vào giỏ hàng và cho phép người dùng xem và chỉnh sửa giỏ hàng của mình.
   ![cart](https://github.com/Heidann/E-Commerce-Website/assets/136775397/f93e4bed-8669-4f31-91c5-e981ef715523)  
