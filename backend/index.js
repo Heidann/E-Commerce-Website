@@ -14,7 +14,7 @@ app.use(cors()); //
 
 // Database connection with  MongoDB
 mongoose.connect(
-  "mongodb+srv://phhaidann:007007007@cluster0.xkj4mm5.mongodb.net/Ecommerce_Fashion"
+  "mongodb+srv://example:pw@cluster0.xkj4mm5.mongodb.net/Ecommerce_Fashion"
 );
 
 // API creation
